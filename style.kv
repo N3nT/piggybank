@@ -1,0 +1,136 @@
+#:import SlideTransition kivy.uix.screenmanager.SlideTransition
+
+<MainWindow>
+    goal_name_ons: goal_name_ons
+    goal_progress: goal_progress
+    progress_bar: progress_bar
+    add_to_bar: add_to_bar
+
+    Label:
+        id: goal_name_ons
+        text: "Goal name"
+        font_size: 30
+        pos_hint: {"x": 0.01, "y": 0.15}
+    Label:
+        id: goal_progress
+        text: "NaN %"
+        font_size: 20
+        pos_hint: {"x": 0.01, "y": 0.11}
+    ProgressBar:
+        id: progress_bar
+        min: 0
+        max: 100
+        pos_hint: {"x": 0.1, "y": 0.07}
+        size_hint_x: .8
+        value: 0
+    TextInput:
+        id: add_to_bar
+        multiline: False
+        pos_hint: {"x": 0.3, "top":0.4}
+        size_hint: 0.4, 0.04
+        text: "0.0"
+    Button:
+        text: "Add"
+        id: add_value
+        font_size: 20
+        size_hint: 0.198, 0.06
+        pos_hint:{"x": 0.3, "y":0.29}
+        background_normal: ''
+        background_color: (0.145,0.5686,0.937,1)
+        on_release:
+            root.add_to_value()
+            root.write_in_file_mn()
+
+    Button:
+        text: "Change"
+        font_size: 20
+        size_hint: 0.198, 0.06
+        pos_hint:{"x": 0.5, "y":0.29}
+        background_normal: ''
+        background_color: (52/255, 104/255, 149/255, 1)
+        on_release:
+            root.add_goal()
+            root.take_data()
+            root.manager.transition.direction = 'left'
+
+<AddGoalWindow>
+
+    goal_name: goal_name
+    goal_value: goal_value
+    actual_value: actual_value
+
+    FloatLayout:
+
+        Label:
+            text:"Goal name: "
+            pos_hint: {"x":0.15, "top":0.9}
+            size_hint: 0.35, 0.15
+
+        TextInput:
+            id: goal_name
+            multiline: False
+            pos_hint: {"x": 0.4 , "top":0.845}
+            size_hint: 0.3, 0.04
+            text: 'No goal'
+
+
+
+        Label:
+            text:"End value: "
+            pos_hint: {"x":0.15, "top":0.85}
+            size_hint: 0.35, 0.15
+
+        TextInput:
+            id: goal_value
+            multiline: False
+            pos_hint: {"x": 0.4 , "top":0.795}
+            size_hint: 0.3, 0.04
+            text: "0"
+
+
+
+        Label:
+            text:"Actual value: "
+            pos_hint: {"x":0.15, "top":0.8}
+            size_hint: 0.35, 0.15
+
+        TextInput:
+            id: actual_value
+            multiline: False
+            text: "0"
+            pos_hint: {"x": 0.4 , "top":0.745}
+            size_hint: 0.3, 0.04
+
+
+
+        Button:
+            text: "Back"
+            pos_hint: {"x": 0.3 , "top":0.545}
+            size_hint: 0.2, 0.05
+            background_normal: ''
+            background_color: (52/255, 104/255, 149/255, 1)
+            on_release:
+                root.manager.transition.direction = 'right'
+                root.back_to_main()
+
+        Button:
+            text: "Done"
+            pos_hint: {"x": 0.5 , "top":0.545}
+            size_hint: 0.2, 0.05
+            background_normal: ''
+            background_color: (0.145,0.5686,0.937,1)
+            on_release:
+                root.manager.transition.direction = 'right'
+                root.done()
+                root.back_to_main()
+                root.change()
+                root.write_in_file_sc()
+
+        Button:
+            text: "Reset"
+            pos_hint: {"x": 0.4 , "top":0.435}
+            size_hint: 0.2, 0.05
+            background_normal: ''
+            background_color: (53/255, 180/255, 118/255, 1)
+            on_release:
+                root.reset()
